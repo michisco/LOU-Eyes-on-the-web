@@ -1,5 +1,6 @@
 ﻿var isOccupied = false;
 var languageUser = chrome.i18n.getUILanguage();
+languageUser = languageUser.split('-')[0];
 var translatorAvailable = false;
 var languageDetectorAvailable = false;
 const tabSeen = new Map(); //data structure that contains which tab has activated LOU.
@@ -88,8 +89,6 @@ function setSystemAgent(p_nimages, p_language, p_formatted_lang) {
            In the webpage summary:
            The webpage explains recent developments in electric vehicles, focusing on new battery technologies and charging networks.`;
     }
-
-    console.log(l_system_prompt);
     return l_system_prompt;
 }
 
@@ -230,7 +229,7 @@ async function runAIPrompt(data) {
             }
         }//if Translator API is not available or the user's native language is English, set the default message
         else{
-            if(language !== 'en'){
+            if (languageUser !== 'en'){
                 welcome_message = "Sorry, I can't translate the content in your language. Now, I'm reading the web page, wait a few moments... ";
             }
             else{
@@ -314,20 +313,22 @@ async function runAIPrompt(data) {
                 ]
             );
 
+            let lou_response_cleaned = lou_response.replace(/[#*]/g, ''); //removes some special characters
             //if the translator API is available and English is not user's native language, translate the response in the same user's language
             if (!translation_unavailability && languageUser !== 'en') {
+                
                 const translator = await Translator.create({ sourceLanguage: 'en', targetLanguage: languageUser });
-                lou_response = await translator.translate(lou_response);
-                console.log(lou_response);
-                speakWithWebSpeechAPI(lou_response, languageUser);
+                lou_response_cleaned = await translator.translate(lou_response_cleaned);
+                console.log(lou_response_cleaned);
+                speakWithWebSpeechAPI(lou_response_cleaned, languageUser);
             }
             else{
-                console.log(lou_response);
-                speakWithWebSpeechAPI(lou_response, 'en');
+                console.log(lou_response_cleaned);
+                speakWithWebSpeechAPI(lou_response_cleaned, 'en');
             }
 
             //result_lou = lou_response;
-            tabSeen.set(current_tab.id, lou_response); //set current active tab is using LOU, saving the response 
+            tabSeen.set(current_tab.id, lou_response_cleaned); //set current active tab is using LOU, saving the response 
             tabCurrentURL.set(current_tab.id, current_tab.url); //set current webpage url with corresponding current tab
             isOccupied = false;
             session.destroy();

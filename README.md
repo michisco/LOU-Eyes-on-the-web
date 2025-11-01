@@ -1,5 +1,7 @@
 # L.O.U. (Look, Outline, Unpack) - Eyes on the web
 
+<p align="center"><img src="/resources/LouIcon.png" width="250" /></p>
+
 LOU is a Chrome Extension designed to help visually impaired users **understand web content more easily** — including **text, images, and visual elements**. It provides smart accessibility features that enhance clarity, comprehension, and comfort while browsing the web.
 
 ## ✨ Features
@@ -50,3 +52,10 @@ LOU uses Chrome's built-in Gemini Nano AI to understand and summarize text and i
 - No data sent to external servers
 - No tracking or data collection
 - Complete privacy protection for all users
+
+## 🛠️ Tech Stack
+
+- Prompt API
+- Translator API
+- Language Detector API
+- Web Speech API

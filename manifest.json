@@ -1,0 +1,41 @@
+{
+    "name": "LOU - Eyes on the web",
+    "description": "LOU (Look, Outline, Unpack) reads, understands, explains, and translates webpages' content for visually impaired users.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "trial_tokens": [
+        "A5o6mtm2/IB27bzE0VgzjfCHPy2lpMLhnUOyfBpOKD3FJ7ab5AGxfY6AonEJ/Pj78/sEuWFll6HmDiqwMjKAqAEAAACPeyJvcmlnaW4iOiJjaHJvbWUtZXh0ZW5zaW9uOi8vamFsa25kYWZpbmpham9qYXBob2dia2pnZ2ZkYWJwZnAiLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElNdWx0aW1vZGFsSW5wdXQiLCJleHBpcnkiOjE3NzQzMTA0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0==="
+    ],
+    "icons": {
+        "64": "resources/LouIcon_64.png",
+        "128": "resources/LouIcon_128.png"
+    },
+    "minimum_chrome_version": "138",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "commands",
+        "offscreen"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "scripts/serviceWorker.js"
+    },
+    "commands": {
+        "runLOU": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Y",
+                "mac": "Command+Shift+Y"
+            },
+            "description": "LOU reads the current web page"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [ "scripts/promptManager.js" ],
+            "matches": [ "<all_urls>" ]
+        }
+    ]
+}
